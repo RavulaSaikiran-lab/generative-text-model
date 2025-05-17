@@ -1,0 +1,17 @@
+from transformers import pipeline
+
+# Load GPT-2 model
+generator = pipeline("text-generation", model="gpt2")
+
+# Function to generate coherent text with a minimum word count
+def generate_gpt2_text(prompt, min_words=30, max_length=200):
+    generated_text = ""
+    while len(generated_text.split()) < min_words:
+        result = generator(prompt, max_length=max_length, num_return_sequences=1)
+        generated_text = result[0]["generated_text"]
+    return generated_text
+
+# Example usage
+topic = "The impact of artificial intelligence on coding"
+generated_paragraph = generate_gpt2_text(topic)
+print(generated_paragraph)
